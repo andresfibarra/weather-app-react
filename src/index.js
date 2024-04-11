@@ -1,12 +1,13 @@
-import $ from "jquery";
+import $ from 'jquery';
+import './style.scss';
 
 // $("#main").html("Here we go!");
 
 let count = 0;
 
 const updateCounter = () => {
-  $("#main").text(`You've been on this page for ${count} seconds.`);
-  count++;
+  $('#main').text(`You've been on this page for ${count} seconds.`);
+  count += 1;
 };
 
 setInterval(updateCounter, 1000);

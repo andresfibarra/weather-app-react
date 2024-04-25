@@ -5,6 +5,9 @@ import {
 } from 'react-router-dom';
 import './style.scss';
 
+import Counter from './components/counter';
+import Controls from './components/controls';
+
 function App(props) {
   return (
     <BrowserRouter>
@@ -43,7 +46,13 @@ function About(props) {
 }
 
 function Welcome(props) {
-  return <div> Welcome </div>;
+  return (
+    <div>
+      <h1>Welcome</h1>
+      <Counter />
+      <Controls />
+    </div>
+  );
 }
 
 function Test(props) {

@@ -5,16 +5,17 @@ import {
 } from 'react-router-dom';
 import './style.scss';
 
-import Counter from './components/counter';
-import Controls from './components/controls';
+import Weather from './components/weather';
 
 function App(props) {
   return (
     <BrowserRouter>
       <div>
+        {console.log('TEST')}
+
         <Nav />
         <Routes>
-          <Route path="/" element={<Welcome />} />
+          <Route path="/" element={<Weather />} />
           <Route path="/about" element={<About />} />
           <Route path="/test/:id" element={<Test />} />
           <Route path="*" element={<FallBack />} />
@@ -43,16 +44,6 @@ function Nav(props) {
 
 function About(props) {
   return <div> All there is to know about me </div>;
-}
-
-function Welcome(props) {
-  return (
-    <div>
-      <h1>Welcome</h1>
-      <Counter />
-      <Controls />
-    </div>
-  );
 }
 
 function Test(props) {

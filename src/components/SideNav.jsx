@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 
 function SideNav() {
-  const [vis, setVis] = useState(false);
+  const [vis, setVis] = useState(true);
 
   function handleButtonClick() {
     setVis(!vis);
@@ -12,10 +12,13 @@ function SideNav() {
   }
 
   return (
-    <nav>
-      {vis && <SideNavComps />}
-      <button type="button" onClick={handleButtonClick}>toggle</button>
-    </nav>
+    <div className="sideNavContainer">
+      <nav>
+        {vis && <SideNavComps />}
+      </nav>
+      <button type="button" onClick={handleButtonClick}>NavBar</button>
+    </div>
+
   );
 }
 

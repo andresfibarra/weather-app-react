@@ -1,8 +1,6 @@
 import $ from 'jquery';
 import './style.scss';
 
-// $("#main").html("Here we go!");
-
 let count = 0;
 
 const updateCounter = () => {

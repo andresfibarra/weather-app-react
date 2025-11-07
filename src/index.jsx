@@ -1,19 +1,18 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  BrowserRouter, Routes, Route, NavLink, useParams,
+  BrowserRouter, Routes, Route, useParams,
 } from 'react-router-dom';
 import './style.scss';
 
-import Weather from './components/weather';
+import Weather from './components/Weather';
+import SideNav from './components/SideNav';
 
 function App(props) {
   return (
     <BrowserRouter>
       <div>
-        {console.log('TEST')}
-
-        <Nav />
+        <SideNav />
         <Routes>
           <Route path="/" element={<Weather />} />
           <Route path="/about" element={<About />} />
@@ -25,22 +24,22 @@ function App(props) {
   );
 }
 
-function Nav(props) {
-  return (
-    <nav>
-      <ul>
-        <li>
-          <NavLink to="/">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/about">About</NavLink>
-        </li>
-        <li><NavLink to="/test/id1">test id1</NavLink></li>
-        <li><NavLink to="/test/id2">test id2</NavLink></li>
-      </ul>
-    </nav>
-  );
-}
+// function Nav(props) {
+//   return (
+//     <nav>
+//       <ul>
+//         <li>
+//           <NavLink to="/">Home</NavLink>
+//         </li>
+//         <li>
+//           <NavLink to="/about">About</NavLink>
+//         </li>
+//         <li><NavLink to="/test/id1">test id1</NavLink></li>
+//         <li><NavLink to="/test/id2">test id2</NavLink></li>
+//       </ul>
+//     </nav>
+//   );
+// }
 
 function About(props) {
   return <div> All there is to know about me </div>;

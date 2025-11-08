@@ -26,7 +26,7 @@ function SideNavComps() {
   return (
     <ul>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/">Weather</NavLink>
       </li>
       <li>
         <NavLink to="/about">About</NavLink>

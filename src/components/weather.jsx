@@ -6,8 +6,11 @@ function Weather() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
+
   async function getCoordsByName(city) {
-    const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
+    console.log(`FINDING BY CITY NAME ${city}`);
+
     const res = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`,
     );
@@ -24,9 +27,24 @@ function Weather() {
     return coordsArray;
   }
 
-  // async function getCoordsByZip(zip) {
-  //   return null;
-  // }
+  async function getCoordsByZip(zip) {
+    console.log(`FINDING BY ZIP ${zip}`);
+
+    const res = await fetch(
+      `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${API_KEY}`,
+    );
+
+    if (!res.ok) {
+      throw new Error('ERROR FETCHING COORDINATES FROM ZIP');
+    }
+
+    const coordData = await res.json();
+    setLocation(coordData.name);
+
+    const coordsArray = [coordData.lat, coordData.lon];
+
+    return coordsArray;
+  }
 
   async function getWeather(input) {
     if (!input) return;
@@ -37,9 +55,12 @@ function Weather() {
       setError('');
       setWeather(null);
 
-      const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
-
-      const coordsArray = await getCoordsByName(input);
+      let coordsArray;
+      if (!Number.isNaN(parseInt(input, 10))) {
+        coordsArray = await getCoordsByZip(input);
+      } else {
+        coordsArray = await getCoordsByName(input);
+      }
 
       /* Using coordinates, fetch weather data */
       console.log(`RECEIVED: ${coordsArray}`);
@@ -71,7 +92,7 @@ function Weather() {
       {/* Search input */}
       <h1>Weather</h1>
       <input
-        placeholder="Enter city"
+        placeholder="Enter city name or zip"
         onKeyDown={(e) => e.key === 'Enter' && getWeather(e.target.value)}
       />
 
@@ -100,7 +121,7 @@ function Weather() {
 
       {!loading && !error && !weather && (
         <div className="hint">
-          Search for a city to see the weather
+          Search for location to see the weather
         </div>
       )}
     </div>

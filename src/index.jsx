@@ -11,30 +11,47 @@ import SideNav from './components/SideNav';
 function App(props) {
   return (
     <BrowserRouter>
-      <div>
+      <div className="app-layout">
         <SideNav />
-        <Routes>
-          <Route path="/" element={<Weather />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/test/:id" element={<Test />} />
-          <Route path="*" element={<FallBack />} />
-        </Routes>
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Weather />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/test/:id" element={<Test />} />
+            <Route path="*" element={<FallBack />} />
+          </Routes>
+        </main>
       </div>
     </BrowserRouter>
   );
 }
 
 function About(props) {
-  return <div> All there is to know about me </div>;
+  return (
+    <div className="page-card">
+      <h1>About this app</h1>
+      <p>All there is to know about me</p>
+    </div>
+  );
 }
 
 function Test(props) {
   const { id } = useParams();
-  return <div> ID: {id} </div>;
+  return (
+    <div className="page-card">
+      <h2>Test route</h2>
+      <p>ID: {id}</p>
+    </div>
+  );
 }
 
 function FallBack(props) {
-  return <div>URL Not Found</div>;
+  return (
+    <div className="page-card">
+      <h2>Test route</h2>
+      <p>URL Not Found</p>
+    </div>
+  );
 }
 
 const root = createRoot(document.getElementById('main'));

@@ -88,7 +88,7 @@ function Weather() {
   }
 
   return (
-    <div>
+    <div className="weather-app">
       {/* Search input */}
       <h1>Weather</h1>
       <input

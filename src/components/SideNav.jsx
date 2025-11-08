@@ -16,7 +16,7 @@ function SideNav() {
       <nav>
         {vis && <SideNavComps />}
       </nav>
-      <button type="button" onClick={handleButtonClick}>NavBar</button>
+      <button type="button" className="sidePaneButton" onClick={handleButtonClick}>NavBar</button>
     </div>
 
   );

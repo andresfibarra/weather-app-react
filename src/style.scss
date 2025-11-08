@@ -16,34 +16,81 @@ body {
 
 /* ============= Side Nav ============= */
 
-.sideNavContainer {
-  top: 10px; ; 
-  left: 10px; ; 
-  width: 25%; 
-  transition: width 0.5s ease; 
-  display: flex; 
-  align-items: center; 
-  flex-direction: row; 
-  align-items: flex-start; 
-  margin-bottom: 20px; 
-}
-
-
 nav {
-  width: 100%; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 100vh;
+  background-color: #111827;
+  padding-top: 1.75rem;
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  border-right: 1px solid rgba(148, 163, 253, 0.08);
+  box-shadow: 12px 0 40px rgba(15, 23, 42, 0.9);
+  z-index: 20;
 }
 
+/* Remove bullets + clean spacing inside nav */
 nav ul {
-  padding-left: 0; 
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 nav li {
-  list-style: none; 
+  width: 100%;
 }
 
-.sideNavContainer button {
-  margin-top: 16px; 
-  margin-left: 15px; 
+nav a {
+  display: block;
+  padding: 0.7rem 1.5rem;
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: all 0.18s ease;
+}
+
+nav a:hover {
+  color: #e5e7eb;
+  background-color: rgba(15, 23, 42, 0.95);
+}
+
+nav a.active {
+  color: #38bdf8;
+  background: linear-gradient(
+    90deg,
+    rgba(56, 189, 248, 0.16),
+    transparent
+  );
+  border-left: 3px solid #38bdf8;
+}
+
+/* If you use a toggle button next to the nav */
+.sidePaneButton {
+  position: fixed;
+  top: 1.4rem;
+  left: 25%;
+  transform: translateX(0);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.78rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 253, 0.32);
+  background-color: #020817;
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 25;
+}
+
+.sidePaneButton:hover {
+  background-color: #111827;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.9);
 }
 
 :root {
@@ -54,8 +101,6 @@ nav li {
   color: pink;
 }
 
-
-/* DIVIDER */
 /* ============= Main Content / Routes ============= */
 
 /* Push all routed content to the right of the fixed nav */

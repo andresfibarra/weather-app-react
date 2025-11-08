@@ -2,12 +2,34 @@ import React, { useState } from 'react';
 
 function Weather() {
   const [weather, setWeather] = useState(null);
-  const [cityName, setCityName] = useState('');
+  const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  async function getWeather(city) {
-    if (!city) return;
+  async function getCoordsByName(city) {
+    const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
+    const res = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`,
+    );
+
+    if (!res.ok) {
+      throw new Error('ERROR FETCHING COORDINATES');
+    }
+
+    const coordData = await res.json();
+    setLocation(coordData[0].name);
+
+    const coordsArray = [coordData[0].lat, coordData[0].lon];
+
+    return coordsArray;
+  }
+
+  // async function getCoordsByZip(zip) {
+  //   return null;
+  // }
+
+  async function getWeather(input) {
+    if (!input) return;
 
     try {
       setLoading(true);
@@ -17,21 +39,12 @@ function Weather() {
 
       const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
 
-      const coordRes = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`,
-      );
-
-      if (!coordRes.ok) {
-        throw new Error('ERROR FETCHING COORDINATES');
-      }
-
-      const coordData = await coordRes.json();
-      console.log(coordData);
-      setCityName(coordData[0].name);
+      const coordsArray = await getCoordsByName(input);
 
       /* Using coordinates, fetch weather data */
-      const res = await fetch( // hardcoded longitute/ latitude for now
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${coordData[0].lat}&lon=${coordData[0].lon}&units=imperial&appid=${API_KEY}`,
+      console.log(`RECEIVED: ${coordsArray}`);
+      const res = await fetch(
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${coordsArray[0]}&lon=${coordsArray[1]}&units=imperial&appid=${API_KEY}`,
       );
 
       if (!res.ok) {
@@ -78,7 +91,7 @@ function Weather() {
 
       {!loading && !error && weather && (
         <div className="weather-card">
-          <p>Showing results for: {cityName}</p>
+          <p>Showing results for: {location}</p>
           <h2>Temperature</h2>
           <p>{weather.current.temp}°F</p>
           <p><em>Feels like:</em> {weather.current.feels_like}°F</p>

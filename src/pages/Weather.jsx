@@ -10,8 +10,6 @@ function Weather() {
   const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
 
   async function getCoordsByName(city) {
-    console.log(`FINDING BY CITY NAME ${city}`);
-
     const res = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`,
     );
@@ -28,8 +26,6 @@ function Weather() {
   }
 
   async function getCoordsByZip(zip) {
-    console.log(`FINDING BY ZIP ${zip}`);
-
     const res = await fetch(
       `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${API_KEY}`,
     );

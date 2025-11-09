@@ -188,6 +188,20 @@ body {
   color: #9ca3af;
 }
 
+/* Format all the weather cards */ 
+.weather-cards-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+
+  /* Optional subtle fade-in animation */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
 /* Weather result card */
 .weather-card {
   margin-top: 0.75rem;

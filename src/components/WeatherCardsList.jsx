@@ -8,7 +8,6 @@ function WeatherCardsList({ citiesWeather }) {
 
   return (
     <div className="weather-cards-list">
-      {console.log(citiesWeather)}
       {citiesWeather.map((data) => (
         <WeatherCard key={data.id || data.name} weather={data} />
       ))}

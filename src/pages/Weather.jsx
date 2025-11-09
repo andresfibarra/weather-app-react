@@ -5,6 +5,7 @@ function Weather() {
   const [citiesWeather, setCitiesWeather] = useState([]); // array of weathers to display cards
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [query, setQuery] = useState(''); // search field
 
   const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
 
@@ -84,6 +85,13 @@ function Weather() {
       setError(err.message || 'Something went wrong.');
     } finally {
       setLoading(false);
+      setQuery('');
+    }
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      getWeather(query);
     }
   }
 
@@ -93,7 +101,9 @@ function Weather() {
       <h1>Weather</h1>
       <input
         placeholder="Enter city name or zip"
-        onKeyDown={(e) => e.key === 'Enter' && getWeather(e.target.value)}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
 
       {/* Render cases */}
@@ -112,12 +122,6 @@ function Weather() {
 
       {!loading && !error && citiesWeather && (
         <WeatherCardsList citiesWeather={citiesWeather} />
-      )}
-
-      {!loading && !error && !citiesWeather && (
-        <div className="hint">
-          Search for location to see the weather
-        </div>
       )}
     </div>
   );

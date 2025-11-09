@@ -6,13 +6,13 @@ import {
 import './style.scss';
 
 import Weather from './components/Weather';
-import SideNav from './components/SideNav';
+import Nav from './components/Nav';
 
 function App(props) {
   return (
     <BrowserRouter>
       <div className="app-layout">
-        <SideNav />
+        <Nav />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Weather />} />

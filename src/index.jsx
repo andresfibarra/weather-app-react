@@ -1,12 +1,15 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  BrowserRouter, Routes, Route, useParams,
+  BrowserRouter, Routes, Route,
 } from 'react-router-dom';
 import './style.scss';
 
 import Weather from './components/Weather';
 import Nav from './components/Nav';
+import About from './pages/About';
+import Test from './pages/Test';
+import FallBack from './pages/FallBack';
 
 function App(props) {
   return (
@@ -23,34 +26,6 @@ function App(props) {
         </main>
       </div>
     </BrowserRouter>
-  );
-}
-
-function About(props) {
-  return (
-    <div className="page-card">
-      <h1>About this app</h1>
-      <p>All there is to know about me</p>
-    </div>
-  );
-}
-
-function Test(props) {
-  const { id } = useParams();
-  return (
-    <div className="page-card">
-      <h2>Test route</h2>
-      <p>ID: {id}</p>
-    </div>
-  );
-}
-
-function FallBack(props) {
-  return (
-    <div className="page-card">
-      <h2>Test route</h2>
-      <p>URL Not Found</p>
-    </div>
   );
 }
 

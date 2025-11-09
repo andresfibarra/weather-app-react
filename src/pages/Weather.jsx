@@ -76,12 +76,12 @@ function Weather() {
         newObj,
         ...prev,
       ]);
+      setQuery('');
     } catch (err) {
       console.error(err);
       setError(err.message || 'Something went wrong.');
     } finally {
       setLoading(false);
-      setQuery('');
     }
   }
 
@@ -116,7 +116,7 @@ function Weather() {
         </div>
       )}
 
-      {!loading && !error && citiesWeather && (
+      {!loading && citiesWeather && (
         <WeatherCardsList citiesWeather={citiesWeather} />
       )}
     </div>

@@ -5,8 +5,8 @@ import {
 } from 'react-router-dom';
 import './style.scss';
 
-import Weather from './components/Weather';
 import Nav from './components/Nav';
+import Weather from './pages/Weather';
 import About from './pages/About';
 import Test from './pages/Test';
 import FallBack from './pages/FallBack';

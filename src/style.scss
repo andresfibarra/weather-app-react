@@ -211,7 +211,7 @@ body {
   align-items: center;
 }
 
-/* City name */
+/* Temperature */
 .weather-card h2 {
   margin: 0;
   font-size: 1.4rem;
@@ -226,7 +226,7 @@ body {
   color: #d1d5db;
 }
 
-/* Make temp stand out */
+/* Make city name stand out */
 .weather-card p:first-of-type {
   font-size: 1.7rem;
   font-weight: 500;

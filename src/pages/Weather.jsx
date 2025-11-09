@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import WeatherCardsList from '../components/WeatherCardsList';
 
 function Weather() {
   const [weather, setWeather] = useState(null);
@@ -96,7 +97,7 @@ function Weather() {
         onKeyDown={(e) => e.key === 'Enter' && getWeather(e.target.value)}
       />
 
-      {/* Render */}
+      {/* Render cases */}
 
       {loading && (
         <div className="loading">
@@ -111,12 +112,16 @@ function Weather() {
       )}
 
       {!loading && !error && weather && (
+      <>
+        <WeatherCardsList />
+
         <div className="weather-card">
-          <p>Showing results for: {location}</p>
+          <p>{location}</p>
           <h2>Temperature</h2>
           <p>{weather.current.temp}°F</p>
           <p><em>Feels like:</em> {weather.current.feels_like}°F</p>
         </div>
+      </>
       )}
 
       {!loading && !error && !weather && (

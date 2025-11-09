@@ -1,12 +1,19 @@
 import React from 'react';
 import WeatherCard from './WeatherCard';
 
-function WeatherCardsList() {
+function WeatherCardsList({ citiesWeather }) {
+  if (!citiesWeather || citiesWeather.length === 0) {
+    return <div className="hint">Search for a city or zip code to get started!</div>;
+  }
+
   return (
-    <>
-      <p>Weather card here</p>
-      <WeatherCard />
-    </>
+    <div className="weather-cards-list">
+      {console.log(citiesWeather)}
+      {citiesWeather.map((data) => (
+        <WeatherCard key={data.id || data.name} weather={data} />
+      ))}
+    </div>
+
   );
 }
 

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import WeatherCardsList from '../components/WeatherCardsList';
 
 function Weather() {
-  const [weather, setWeather] = useState(null);
-  const [location, setLocation] = useState('');
+  const [citiesWeather, setCitiesWeather] = useState([]); // array of weathers to display cards
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -21,9 +20,8 @@ function Weather() {
     }
 
     const coordData = await res.json();
-    setLocation(coordData[0].name);
 
-    const coordsArray = [coordData[0].lat, coordData[0].lon];
+    const coordsArray = [coordData[0].lat, coordData[0].lon, coordData[0].name];
 
     return coordsArray;
   }
@@ -40,9 +38,8 @@ function Weather() {
     }
 
     const coordData = await res.json();
-    setLocation(coordData.name);
 
-    const coordsArray = [coordData.lat, coordData.lon];
+    const coordsArray = [coordData.lat, coordData.lon, coordData.name];
 
     return coordsArray;
   }
@@ -54,8 +51,8 @@ function Weather() {
       setLoading(true);
       // clear old values while loading
       setError('');
-      setWeather(null);
 
+      // search with correct API as needed
       let coordsArray;
       if (!Number.isNaN(parseInt(input, 10))) {
         coordsArray = await getCoordsByZip(input);
@@ -64,7 +61,6 @@ function Weather() {
       }
 
       /* Using coordinates, fetch weather data */
-      console.log(`RECEIVED: ${coordsArray}`);
       const res = await fetch(
         `https://api.openweathermap.org/data/3.0/onecall?lat=${coordsArray[0]}&lon=${coordsArray[1]}&units=imperial&appid=${API_KEY}`,
       );
@@ -78,11 +74,14 @@ function Weather() {
       }
 
       const data = await res.json();
-      setWeather(data);
+      const newObj = { ...data, location: coordsArray[2], id: crypto.randomUUID() };
+      setCitiesWeather((prev) => [
+        newObj,
+        ...prev,
+      ]);
     } catch (err) {
       console.error(err);
       setError(err.message || 'Something went wrong.');
-      setWeather(null);
     } finally {
       setLoading(false);
     }
@@ -111,20 +110,11 @@ function Weather() {
         </div>
       )}
 
-      {!loading && !error && weather && (
-      <>
-        <WeatherCardsList />
-
-        <div className="weather-card">
-          <p>{location}</p>
-          <h2>Temperature</h2>
-          <p>{weather.current.temp}°F</p>
-          <p><em>Feels like:</em> {weather.current.feels_like}°F</p>
-        </div>
-      </>
+      {!loading && !error && citiesWeather && (
+        <WeatherCardsList citiesWeather={citiesWeather} />
       )}
 
-      {!loading && !error && !weather && (
+      {!loading && !error && !citiesWeather && (
         <div className="hint">
           Search for location to see the weather
         </div>

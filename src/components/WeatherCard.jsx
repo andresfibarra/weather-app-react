@@ -1,8 +1,12 @@
 import React from 'react';
+import { FaRegWindowClose } from 'react-icons/fa';
 
 function WeatherCard({ weather }) {
   return (
     <div className="weather-card">
+
+      <FaRegWindowClose />
+
       <p>{weather.location}</p>
       <h2>Temperature</h2>
       <p>{weather.current.temp}°F</p>

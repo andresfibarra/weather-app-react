@@ -102,6 +102,10 @@ function Weather() {
     }
   }
 
+  function handleRemoveCard(id) {
+    console.log('REMOVE');
+  }
+
   return (
     <div className="weather-app">
       {/* Search input */}
@@ -128,7 +132,8 @@ function Weather() {
       )}
 
       {!loading && citiesWeather && (
-        <WeatherCardsList citiesWeather={citiesWeather} />
+        // eslint-disable-next-line react/jsx-no-bind
+        <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} />
       )}
     </div>
   );

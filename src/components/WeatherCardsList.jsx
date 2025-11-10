@@ -1,7 +1,7 @@
 import React from 'react';
 import WeatherCard from './WeatherCard';
 
-function WeatherCardsList({ citiesWeather }) {
+function WeatherCardsList({ citiesWeather, onRemove }) {
   if (!citiesWeather || citiesWeather.length === 0) {
     return <div className="hint">Search for a city or zip code to get started!</div>;
   }
@@ -9,7 +9,7 @@ function WeatherCardsList({ citiesWeather }) {
   return (
     <div className="weather-cards-list">
       {citiesWeather.map((data) => (
-        <WeatherCard key={data.id || data.name} weather={data} />
+        <WeatherCard key={data.id || data.name} weather={data} onRemove={onRemove} />
       ))}
     </div>
 

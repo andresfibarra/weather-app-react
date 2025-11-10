@@ -1,11 +1,17 @@
 import React from 'react';
 import { FaRegWindowClose } from 'react-icons/fa';
 
-function WeatherCard({ weather }) {
+function WeatherCard({ weather, onRemove }) {
   return (
     <div className="weather-card">
-
-      <FaRegWindowClose />
+      <button
+        type="button"
+        className="weather-close-button"
+        onClick={() => onRemove(weather.id)}
+        aria-label="Remove weather card"
+      >
+        <FaRegWindowClose />
+      </button>
 
       <p>{weather.location}</p>
       <h2>Temperature</h2>

@@ -72,10 +72,21 @@ function Weather() {
 
       const data = await res.json();
       const newObj = { ...data, location: coordsArray[2], id: crypto.randomUUID() };
-      setCitiesWeather((prev) => [
-        newObj,
-        ...prev,
-      ]);
+      setCitiesWeather((prev) => {
+        // check that that care is not already being displayed
+        const alreadyExists = prev.some(
+          (curr) => curr.location.toLowerCase() === newObj.location.toLowerCase(),
+        );
+        if (alreadyExists) {
+          console.log(`Skipping duplicate: ${newObj.location}`);
+          setError(`Weather for ${newObj.location} already being shown`);
+          return prev;
+        }
+        return [ // else add to the list of cities
+          newObj,
+          ...prev,
+        ];
+      });
       setQuery('');
     } catch (err) {
       console.error(err);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import WeatherCardsList from '../components/WeatherCardsList';
 
 function Weather() {
@@ -102,9 +102,9 @@ function Weather() {
     }
   }
 
-  function handleRemoveCard(id) {
-    console.log('REMOVE');
-  }
+  const handleRemoveCard = useCallback((id) => {
+    setCitiesWeather((prev) => prev.filter((card) => card.id !== id));
+  }, []);
 
   return (
     <div className="weather-app">
@@ -132,7 +132,6 @@ function Weather() {
       )}
 
       {!loading && citiesWeather && (
-        // eslint-disable-next-line react/jsx-no-bind
         <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} />
       )}
     </div>

@@ -15,8 +15,8 @@ function WeatherCard({ weather, onRemove }) {
 
       <p>{weather.location}</p>
       <h2>Temperature</h2>
-      <p>{weather.current.temp}°F</p>
       <p><em>Feels like:</em> {weather.current.feels_like}°F</p>
+      <p>{weather.current.temp}°F</p>
     </div>
   );
 }

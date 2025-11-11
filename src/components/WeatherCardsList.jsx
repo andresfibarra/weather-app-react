@@ -6,10 +6,6 @@ function WeatherCardsList({ citiesWeather, onRemove, setCitiesWeather }) {
     return <div className="hint">Search for a city or zip code to get started!</div>;
   }
 
-  const handleRemoveCard = useCallback((id) => {
-    setCitiesWeather((prev) => prev.filter((card) => card.id !== id));
-  }, []);
-
   return (
     <div className="weather-cards-list">
       {citiesWeather.map((data) => (

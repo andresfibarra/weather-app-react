@@ -132,7 +132,7 @@ function Weather() {
       )}
 
       {!loading && citiesWeather && (
-        <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} setCitiesWeather={setCitiesWeather} />
+        <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} />
       )}
     </div>
   );

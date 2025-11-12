@@ -25,23 +25,6 @@ body {
 
 /* =========== Top Navigation Bar =========== */
 
-// .topNav {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 64px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   padding: 0 2rem;
-//   background: rgba(15, 23, 42, 0.95); /* dark navy */
-//   border-bottom: 1px solid rgba(148, 163, 253, 0.12);
-//   backdrop-filter: blur(8px);
-//   z-index: 50;
-//   box-shadow: 0 6px 25px rgba(15, 23, 42, 0.6);
-// }
-
 .nav-brand {
   font-size: 1.25rem;
   font-weight: 600;
@@ -205,77 +188,6 @@ body {
 
   /* Optional subtle fade-in animation */
   animation: fadeIn 0.3s ease-in-out;
-}
-
-/* Weather result card */
-.weather-card {
-  position: relative; 
-  margin-top: 0.75rem;
-  padding: 1.6rem 1.8rem 1.4rem;
-  border-radius: 1rem;
-  background: radial-gradient(
-      circle at top left,
-      rgba(56, 189, 248, 0.12),
-      transparent
-    ),
-    rgba(15, 23, 42, 0.96);
-  border: 1px solid rgba(148, 163, 253, 0.14);
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
-  max-width: 420px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 2fr auto;
-  grid-template-rows: auto auto;
-  column-gap: 1.2rem;
-  row-gap: 0.25rem;
-  align-items: center;
-}
-
-.weather-close-button {
-  position: absolute; 
-  top: 0.5rem; 
-  right: 0.3rem; 
-  background: none; 
-  border: none; 
-  color: #9ca3af; 
-  cursor: pointer; 
-  font-size: 1.1rem; 
-  transition: color 0.2s ease, transform 0.2s ease; 
-}
-
-.weather-close-button:hover {
-  color: #f87171; 
-}
-
-/* Temperature */
-.weather-card h2 {
-  margin: 0;
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-/* Description line */
-.weather-card p {
-  margin: 0.12rem 0;
-  font-size: 0.92rem;
-  color: #d1d5db;
-}
-
-/* Make city name stand out */
-.weather-card p:first-of-type {
-  font-size: 1.7rem;
-  font-weight: 500;
-  color: #38bdf8;
-}
-
-/* Icon styling */
-.weather-card img {
-  grid-row: 1 / span 2;
-  width: 64px;
-  height: 64px;
-  justify-self: flex-end;
-  filter: drop-shadow(0 4px 8px rgba(15, 23, 42, 0.85));
 }
 
 /* Responsiveness */

@@ -109,7 +109,7 @@ function Weather() {
   return (
     <div className="weather-app">
       {/* Search input */}
-      <h1>Weather</h1>
+      <h1 className="text-white text-3xl pb-5 font-medium">Weather</h1>
       <input
         placeholder="Enter city name or zip"
         value={query}

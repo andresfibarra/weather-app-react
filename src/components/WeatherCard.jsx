@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaRegWindowClose, FaExpand } from 'react-icons/fa';
 
-function WeatherCard({ weather, onRemove }) {
+function WeatherCard({ weather, onRemove, onExpand }) {
   return (
     <div
       className="relative mt-3 pl px-7 pt-6 pb-5 rounded-2xl
@@ -12,7 +12,7 @@ function WeatherCard({ weather, onRemove }) {
       <button
         type="button"
         className="absolute top-1.5 left-1.5 bg-transparent border-0 text-gray-400 hover:text-red-400 transition-colors duration-200 cursor-pointer rounded-2xl "
-        // onClick={() => onRemove(weather.id)}
+        onClick={() => onExpand(weather.id)}
         aria-label="Remove weather card"
       >
         <FaExpand size={18} />

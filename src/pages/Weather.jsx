@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import WeatherCardsList from '../components/WeatherCardsList';
+import WeatherCardModal from '../components/WeatherCardModal';
 
 function Weather() {
   const [citiesWeather, setCitiesWeather] = useState([]); // array of weathers to display cards
@@ -102,12 +103,22 @@ function Weather() {
     }
   }
 
+  // function to remove a weather card; passed down as a prop
   const handleRemoveCard = useCallback((id) => {
     setCitiesWeather((prev) => prev.filter((card) => card.id !== id));
   }, []);
 
+  // function to open a weather card modal; passed down as a prop
+  // bubble up ID?
+  const onOpenCardDetails = useCallback(() => {
+    console.log('Open card!');
+    return null;
+  }, []);
+
   return (
     <div className="weather-app">
+      <WeatherCardModal />
+
       {/* Search input */}
       <h1 className="text-white text-3xl pb-5 font-medium">Weather</h1>
       <input
@@ -132,7 +143,7 @@ function Weather() {
       )}
 
       {citiesWeather && (
-        <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} />
+        <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} onExpand={onOpenCardDetails} />
       )}
     </div>
   );

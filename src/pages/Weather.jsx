@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useCallback } from 'react';
 import WeatherCardsList from '../components/WeatherCardsList';
 import WeatherCardModal from '../components/WeatherCardModal';
@@ -7,6 +8,8 @@ function Weather() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [query, setQuery] = useState(''); // search field
+
+  const [selectedId, setSelectedId] = useState(null);
 
   const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
 
@@ -110,14 +113,27 @@ function Weather() {
 
   // function to open a weather card modal; passed down as a prop
   // bubble up ID?
-  const onOpenCardDetails = useCallback(() => {
-    console.log('Open card!');
-    return null;
+
+  const handleOpenCardDetails = useCallback((id = null) => {
+    console.log(`Open card! ID: ${id}`);
+
+    // set weather
+
+    setSelectedId(id);
   }, []);
+
+  // eslint-disable-next-line no-unused-vars
+  const handleCloseCardDetails = useCallback(() => {
+    console.log('close!');
+    setSelectedId(null);
+  });
 
   return (
     <div className="weather-app">
-      <WeatherCardModal />
+      <WeatherCardModal
+      // weather={selectedId}
+        onClose={handleCloseCardDetails}
+      />
 
       {/* Search input */}
       <h1 className="text-white text-3xl pb-5 font-medium">Weather</h1>
@@ -143,7 +159,7 @@ function Weather() {
       )}
 
       {citiesWeather && (
-        <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} onExpand={onOpenCardDetails} />
+        <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} onExpand={handleOpenCardDetails} />
       )}
     </div>
   );

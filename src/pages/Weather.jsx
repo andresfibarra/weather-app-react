@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import WeatherCardsList from '../components/WeatherCardsList';
 import WeatherCardModal from '../components/WeatherCardModal';
+
+const debug = true;
 
 function Weather() {
   const [citiesWeather, setCitiesWeather] = useState([]); // array of weathers to display cards
@@ -92,6 +94,8 @@ function Weather() {
         ];
       });
       setQuery('');
+
+      if (debug) console.log(newObj);
     } catch (err) {
       console.error(err);
       setError(err.message || 'Something went wrong.');
@@ -122,6 +126,12 @@ function Weather() {
     setSelectedId(id);
   }, []);
 
+  // turn selectedID into a weather object
+  const selectedWeather = useMemo(
+    () => citiesWeather.find((w) => w.id === selectedId) || null,
+    [citiesWeather, selectedId],
+  );
+
   // eslint-disable-next-line no-unused-vars
   const handleCloseCardDetails = useCallback(() => {
     console.log('close!');
@@ -130,10 +140,12 @@ function Weather() {
 
   return (
     <div className="weather-app">
+      {selectedWeather && (
       <WeatherCardModal
-      // weather={selectedId}
+     // weather={selectedId}
         onClose={handleCloseCardDetails}
       />
+      )}
 
       {/* Search input */}
       <h1 className="text-white text-3xl pb-5 font-medium">Weather</h1>

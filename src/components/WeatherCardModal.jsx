@@ -1,8 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 function WeatherCardModal({ weather, onClose }) {
   const closeRef = useRef(null);
+
+  // close on esc
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'Escape') onClose();
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   return createPortal(
     <div
@@ -19,7 +28,11 @@ function WeatherCardModal({ weather, onClose }) {
       />
 
       {/* Panel */}
-      <div className="relative z-10 w-full max-2-lg mx-4 rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+      <div className="relative z-10 w-full max-w-xl p-4 rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+
+        {/* Header */}
+
+        {/* Content */}
         <p>text will go here</p>
         <button
           ref={closeRef}

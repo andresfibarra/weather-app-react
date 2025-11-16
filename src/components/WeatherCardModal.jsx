@@ -19,6 +19,9 @@ function WeatherCardModal({ weather, onClose }) {
     return new Date(dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 
+  const sunrise = convertToTime(weather.current.sunrise);
+  const sunset = convertToTime(weather.current.sunset);
+
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
@@ -34,7 +37,7 @@ function WeatherCardModal({ weather, onClose }) {
       />
 
       {/* Panel */}
-      <div className="relative scroll-auto z-10 w-full max-w-xl max-h-3/4 rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+      <div className="relative overflow-y-auto z-10 w-full max-w-xl max-h-screen rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
 
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800">
@@ -54,12 +57,16 @@ function WeatherCardModal({ weather, onClose }) {
         </div>
 
         {/* Content */}
-        <div className="overflow-auto px-5 py-4 grid gap-4">
-          <p>Sunrise: {convertToTime(weather.current.sunrise)}</p>
-          <p>Sunset: {convertToTime(weather.current.sunset)}</p>
-          <p>Temp: {weather.current.temp}</p>
-          <p>UV Index: {weather.current.uvi}</p>
-          <p>Visibility: {parseInt(weather.current.visibility, 10) / 1000}km</p>
+        <div className=" px-5 py-4 grid gap-4">
+          <Stat label="Temp" value={`${weather?.current?.temp}`} unit="°F" />
+          <Stat label="Feels like" value={`${weather?.current?.feels_like}`} unit="°F" />
+          <Stat label="Humidity" value={`${weather?.current?.humidity ?? 0}`} unit="%" />
+          <Stat label="Wind" value={`${weather?.current?.wind_speed}`} unit="mph" />
+          <Stat label="UV Index" value={weather.current.uvi} />
+          <Stat lable="Visiblity" value={parseInt(weather.current.visibility, 10) / 1000} unit="km" />
+          <Stat label="Sunrise" value={sunrise || '-'} />
+          <Stat label="Sunset" value={sunset || '—'} />
+
         </div>
 
       </div>
@@ -68,3 +75,12 @@ function WeatherCardModal({ weather, onClose }) {
   );
 }
 export default WeatherCardModal;
+
+function Stat({ label, value, unit = '' }) {
+  return (
+    <div className="rounded-xl border border-slate-800 p-3">
+      <div className="text-xs uppercase tracking-wide text-slate-400">{label}</div>
+      <div className="text-base font-medium">{value || '-'} {unit}</div>
+    </div>
+  );
+}

@@ -84,7 +84,7 @@ function Weather() {
           (curr) => curr.location.toLowerCase() === newObj.location.toLowerCase(),
         );
         if (alreadyExists) {
-          console.log(`Skipping duplicate: ${newObj.location}`);
+          if (debug) console.log(`Skipping duplicate: ${newObj.location}`);
           setError(`Weather for ${newObj.location} already being shown`);
           return prev;
         }
@@ -119,7 +119,7 @@ function Weather() {
   // bubble up ID?
 
   const handleOpenCardDetails = useCallback((id = null) => {
-    console.log(`Open card! ID: ${id}`);
+    if (debug) console.log(`Open card! ID: ${id}`);
 
     // set weather
 
@@ -134,7 +134,7 @@ function Weather() {
 
   // eslint-disable-next-line no-unused-vars
   const handleCloseCardDetails = useCallback(() => {
-    console.log('close!');
+    if (debug) console.log('close!');
     setSelectedId(null);
   });
 
@@ -142,7 +142,7 @@ function Weather() {
     <div className="weather-app">
       {selectedWeather && (
       <WeatherCardModal
-     // weather={selectedId}
+        weather={selectedWeather}
         onClose={handleCloseCardDetails}
       />
       )}

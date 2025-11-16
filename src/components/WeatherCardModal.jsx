@@ -14,6 +14,11 @@ function WeatherCardModal({ weather, onClose }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
+  // calculate simple values
+  function convertToTime(dt) {
+    return new Date(dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
@@ -29,13 +34,13 @@ function WeatherCardModal({ weather, onClose }) {
       />
 
       {/* Panel */}
-      <div className="relative z-10 w-full max-w-xl rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+      <div className="relative scroll-auto z-10 w-full max-w-xl max-h-3/4 rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
 
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800">
 
           <h3 id="weather-detail-title" className="text-lg font-semibold">
-            LOCATION
+            {weather.location}
           </h3>
           <button
             type="button"
@@ -49,11 +54,12 @@ function WeatherCardModal({ weather, onClose }) {
         </div>
 
         {/* Content */}
-        <div className="px-5 py-4 grid gap-4">
-          <p>text will go here</p>
-          <p>text 2</p>
-          <p>text 3</p>
-
+        <div className="overflow-auto px-5 py-4 grid gap-4">
+          <p>Sunrise: {convertToTime(weather.current.sunrise)}</p>
+          <p>Sunset: {convertToTime(weather.current.sunset)}</p>
+          <p>Temp: {weather.current.temp}</p>
+          <p>UV Index: {weather.current.uvi}</p>
+          <p>Visibility: {parseInt(weather.current.visibility, 10) / 1000}km</p>
         </div>
 
       </div>

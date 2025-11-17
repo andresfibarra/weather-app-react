@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { FaRegWindowClose } from 'react-icons/fa';
 
 import UVIndexGraph from './UVIndexGraph';
+import TemperatureGraphContainer from './TemperatureGraphContainer';
 
 function WeatherCardModal({ weather, onClose }) {
   const closeRef = useRef(null);
@@ -69,6 +70,9 @@ function WeatherCardModal({ weather, onClose }) {
           <Stat label="Sunset" value={sunset || '—'} />
           <GraphPanel label="UV Index">
             <UVIndexGraph uvi={weather.current.uvi} />
+          </GraphPanel>
+          <GraphPanel label="Temperature">
+            <TemperatureGraphContainer weather={weather} />
           </GraphPanel>
         </div>
 

@@ -2,34 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import WeatherCardsList from '../components/WeatherCardsList';
 import WeatherCardModal from '../components/WeatherCardModal';
 
-// TEST
-import TemperatureGraph from '../components/TemperatureGraph';
-
 const debug = true;
-
-// #region Sample data
-const testTempData = [
-  {
-    time: '1',
-    temp: 50,
-    feelsLike: 52,
-  },
-  {
-    time: '2',
-    temp: 52,
-    feelsLike: 54,
-  },
-  {
-    time: '3',
-    temp: 52,
-    feelsLike: 56,
-  },
-  {
-    time: '4',
-    temp: 60,
-    feelsLike: 54,
-  },
-];
 
 function Weather() {
   const [citiesWeather, setCitiesWeather] = useState([]); // array of weathers to display cards
@@ -166,8 +139,6 @@ function Weather() {
 
   return (
     <div className="weather-app">
-      <TemperatureGraph tempData={testTempData} />
-
       {selectedWeather && (
       <WeatherCardModal
         weather={selectedWeather}

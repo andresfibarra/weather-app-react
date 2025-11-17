@@ -27,7 +27,7 @@ function TemperatureGraph({ tempData }) {
       </defs>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="time" />
-      <YAxis width="auto" />
+      <YAxis width="auto" type="number" domain={[(dataMin) => (dataMin - 10), (dataMax) => (dataMax + 10)]} />
       <Area type="monotone"
         dataKey="temp"
         stroke="#8884d8"

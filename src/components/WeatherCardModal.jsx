@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { FaRegWindowClose } from 'react-icons/fa';
 
+import UVIndexGraph from './UVIndexGraph';
+
 function WeatherCardModal({ weather, onClose }) {
   const closeRef = useRef(null);
 
@@ -62,11 +64,12 @@ function WeatherCardModal({ weather, onClose }) {
           <Stat label="Feels like" value={`${weather?.current?.feels_like}`} unit="°F" />
           <Stat label="Humidity" value={`${weather?.current?.humidity ?? 0}`} unit="%" />
           <Stat label="Wind" value={`${weather?.current?.wind_speed}`} unit="mph" />
-          <Stat label="UV Index" value={weather.current.uvi} />
           <Stat lable="Visiblity" value={parseInt(weather.current.visibility, 10) / 1000} unit="km" />
           <Stat label="Sunrise" value={sunrise || '-'} />
           <Stat label="Sunset" value={sunset || '—'} />
-
+          <GraphPanel label="UV Index">
+            <UVIndexGraph uvi={weather.current.uvi} />
+          </GraphPanel>
         </div>
 
       </div>
@@ -83,5 +86,15 @@ function Stat({ label, value, unit = '' }) {
       <div className="text-xs uppercase tracking-wide text-slate-400">{label}</div>
       <div className="text-base font-medium">{value || '-'} {unit}</div>
     </div>
+  );
+}
+
+function GraphPanel({ label, children }) {
+  return (
+    <div className="rounded-xl border border-slate-800 p-3">
+      <div className="text-xs uppercase tracking-wide text-slate-400">{label}</div>
+      {children}
+    </div>
+
   );
 }

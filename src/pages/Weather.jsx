@@ -3,7 +3,6 @@ import WeatherCardsList from '../components/WeatherCardsList';
 import WeatherCardModal from '../components/WeatherCardModal';
 
 // TEST
-import UVIndexGraph from '../components/UVIndexGraph';
 import TemperatureGraph from '../components/TemperatureGraph';
 
 const debug = true;
@@ -168,7 +167,6 @@ function Weather() {
   return (
     <div className="weather-app">
       <TemperatureGraph tempData={testTempData} />
-      <UVIndexGraph uvi={4.7} />
 
       {selectedWeather && (
       <WeatherCardModal

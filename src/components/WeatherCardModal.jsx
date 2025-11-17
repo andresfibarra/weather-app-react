@@ -76,6 +76,7 @@ function WeatherCardModal({ weather, onClose }) {
 }
 export default WeatherCardModal;
 
+// Helper component to show a field within the weathercardmodal component
 function Stat({ label, value, unit = '' }) {
   return (
     <div className="rounded-xl border border-slate-800 p-3">

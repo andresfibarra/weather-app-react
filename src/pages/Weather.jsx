@@ -1,7 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useCallback, useMemo } from 'react';
 import WeatherCardsList from '../components/WeatherCardsList';
 import WeatherCardModal from '../components/WeatherCardModal';
+
+// TEST
+import UVIndexGraph from '../components/UVIndexGraph';
 
 const debug = true;
 
@@ -140,6 +142,8 @@ function Weather() {
 
   return (
     <div className="weather-app">
+      <UVIndexGraph />
+
       {selectedWeather && (
       <WeatherCardModal
         weather={selectedWeather}

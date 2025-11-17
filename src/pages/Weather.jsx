@@ -168,7 +168,7 @@ function Weather() {
   return (
     <div className="weather-app">
       <TemperatureGraph tempData={testTempData} />
-      <UVIndexGraph />
+      <UVIndexGraph uvi={4.7} />
 
       {selectedWeather && (
       <WeatherCardModal

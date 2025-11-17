@@ -4,6 +4,7 @@ import { FaRegWindowClose } from 'react-icons/fa';
 
 import UVIndexGraph from './UVIndexGraph';
 import TemperatureGraphContainer from './TemperatureGraphContainer';
+import convertToTime from '../utils/time';
 
 function WeatherCardModal({ weather, onClose }) {
   const closeRef = useRef(null);
@@ -16,11 +17,6 @@ function WeatherCardModal({ weather, onClose }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
-
-  // calculate simple values
-  function convertToTime(dt) {
-    return new Date(dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }
 
   const sunrise = convertToTime(weather.current.sunrise);
   const sunset = convertToTime(weather.current.sunset);

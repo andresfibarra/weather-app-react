@@ -108,14 +108,20 @@ function Weather() {
       const newObj = {
         ...data, state_code: locationCodes.state_code, country_code: locationCodes.country_code, location: coordsArray[2], id: crypto.randomUUID(),
       };
-      console.log(`NEW CITY: ${newObj.state_code}`);
 
       setCitiesWeather((prev) => {
         // check that that care is not already being displayed
-        const alreadyExists = prev.some(
+        console.log(`obj: ${newObj}`);
+        const locationAlreadyExists = prev.some(
           (curr) => curr.location.toLowerCase() === newObj.location.toLowerCase(),
         );
-        if (alreadyExists) {
+        const stateAlreadyExists = prev.some(
+          (curr) => curr.state_code === newObj.state_code,
+        );
+        const countryAlreadyExists = prev.some(
+          (curr) => curr.country_code === newObj.country_code,
+        );
+        if (locationAlreadyExists && stateAlreadyExists && countryAlreadyExists) {
           if (debug) console.log(`Skipping duplicate: ${newObj.location}`);
           setError(`Weather for ${newObj.location} already being shown`);
           return prev;

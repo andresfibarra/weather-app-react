@@ -29,9 +29,12 @@ function WeatherCard({ weather, onRemove, onExpand }) {
         <FaRegWindowClose size={18} />
       </button>
 
-      <h2 className="text-3xl font-medium text-sky-400">
-        {weather.location}
-      </h2>
+      <div className="flex gap-1 items-end">
+        <h2 className="text-3xl font-medium text-sky-400">
+          {weather.location}
+        </h2>
+        <h3 className="text-sm font-medium text-sky-400 mb-[4px]">{weather.state_code ?? ''}, {weather.country_code}</h3>
+      </div>
       <p className="m-0 text-[1.4rem] font-semibold tracking-wide">
         Temperature
       </p>

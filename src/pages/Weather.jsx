@@ -12,11 +12,12 @@ function Weather() {
 
   const [selectedId, setSelectedId] = useState(null);
 
-  const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
+  const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
+  const GEOAPIFY_API_KEY = import.meta.env.VITE_GEOAPIFY_KEY;
 
   async function getCoordsByName(city) {
     const res = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`,
+      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${OPENWEATHER_API_KEY}`,
     );
 
     if (!res.ok) {
@@ -32,7 +33,7 @@ function Weather() {
 
   async function getCoordsByZip(zip) {
     const res = await fetch(
-      `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${API_KEY}`,
+      `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${OPENWEATHER_API_KEY}`,
     );
 
     if (!res.ok) {
@@ -44,6 +45,30 @@ function Weather() {
     const coordsArray = [coordData.lat, coordData.lon, coordData.name];
 
     return coordsArray;
+  }
+
+  async function getLocationCodes(coordsArray) {
+    // assume coordsArray = [lat, long]
+    const [lat, lon] = coordsArray;
+    const requestOptions = {
+      method: 'GET',
+    };
+
+    console.log(`lat: ${lat}\nlon: ${lon}`);
+
+    const res = await fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=${GEOAPIFY_API_KEY}`, requestOptions);
+    if (!res.ok) {
+      throw new Error('ERROR FETCHING LOCATION CODES');
+    }
+
+    const locationData = await res.json();
+    console.log(locationData.features[0].properties);
+    const locationDataObj = {
+      state_code: locationData.features[0].properties.state_code,
+      country_code: locationData.features[0].properties.country_code.toUpperCase(),
+    };
+    // return object with the state and country codes
+    return locationDataObj;
   }
 
   async function getWeather(input) {
@@ -64,7 +89,7 @@ function Weather() {
 
       /* Using coordinates, fetch weather data */
       const res = await fetch(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${coordsArray[0]}&lon=${coordsArray[1]}&units=imperial&appid=${API_KEY}`,
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${coordsArray[0]}&lon=${coordsArray[1]}&units=imperial&appid=${OPENWEATHER_API_KEY}`,
       );
 
       if (!res.ok) {
@@ -76,7 +101,15 @@ function Weather() {
       }
 
       const data = await res.json();
-      const newObj = { ...data, location: coordsArray[2], id: crypto.randomUUID() };
+
+      // add state or country field
+      const locationCodes = await getLocationCodes(coordsArray.slice(0, 2)); // [0] is lat, [1] is long
+
+      const newObj = {
+        ...data, state_code: locationCodes.state_code, country_code: locationCodes.country_code, location: coordsArray[2], id: crypto.randomUUID(),
+      };
+      console.log(`NEW CITY: ${newObj.state_code}`);
+
       setCitiesWeather((prev) => {
         // check that that care is not already being displayed
         const alreadyExists = prev.some(

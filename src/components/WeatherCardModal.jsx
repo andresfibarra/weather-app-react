@@ -61,7 +61,7 @@ function WeatherCardModal({ weather, onClose }) {
           <Stat label="Feels like" value={`${weather?.current?.feels_like}`} unit="°F" />
           <Stat label="Humidity" value={`${weather?.current?.humidity ?? 0}`} unit="%" />
           <Stat label="Wind" value={`${weather?.current?.wind_speed}`} unit="mph" />
-          <Stat lable="Visiblity" value={parseInt(weather.current.visibility, 10) / 1000} unit="km" />
+          <Stat label="Visiblity" value={parseInt(weather.current.visibility, 10) / 1000} unit="km" />
           <Stat label="Sunrise" value={sunrise || '-'} />
           <Stat label="Sunset" value={sunset || '—'} />
           <GraphPanel label="UV Index">

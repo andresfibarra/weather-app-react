@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Area, AreaChart, CartesianGrid, XAxis, YAxis,
+  Area, AreaChart, CartesianGrid, XAxis, YAxis, Legend,
 } from 'recharts';
 
 function TemperatureGraph({ tempData }) {
@@ -28,6 +28,7 @@ function TemperatureGraph({ tempData }) {
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="time" />
       <YAxis width="auto" type="number" domain={[(dataMin) => (dataMin - 10), (dataMax) => (dataMax + 10)]} />
+      <Legend />
       <Area type="monotone"
         dataKey="temp"
         stroke="#8884d8"

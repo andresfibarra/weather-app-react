@@ -4,6 +4,9 @@ import { FaRegWindowClose, FaExpand } from 'react-icons/fa';
 function WeatherCard({ weather, onRemove, onExpand }) {
   return (
     <div
+      role="button"
+      tabIndex={0}
+      onClick={() => onExpand(weather.id)}
       className="relative mt-3 pl px-7 pt-6 pb-5 rounded-2xl
       grid w-full max-w-[500px] min-w-[400px] items-center grid-cols-[2fr_auto] grid-rows-[auto-auto]
       gap-x-[1.2rem] gap-y-1

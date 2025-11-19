@@ -33,7 +33,7 @@ function WeatherCard({ weather, onRemove, onExpand }) {
         <h2 className="text-3xl font-medium text-sky-400">
           {weather.location}
         </h2>
-        <h3 className="text-sm font-medium text-sky-400 mb-[4px]">{weather.state_code ?? ''}, {weather.country_code}</h3>
+        <h3 className="text-sm font-medium text-sky-400 mb-[4px]">{weather.state_code && `${weather.state_code}, `}{weather.country_code}</h3>
       </div>
       <p className="m-0 text-[1.4rem] font-semibold tracking-wide">
         Temperature

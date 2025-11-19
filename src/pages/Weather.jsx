@@ -54,15 +54,12 @@ function Weather() {
       method: 'GET',
     };
 
-    console.log(`lat: ${lat}\nlon: ${lon}`);
-
     const res = await fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=${GEOAPIFY_API_KEY}`, requestOptions);
     if (!res.ok) {
       throw new Error('ERROR FETCHING LOCATION CODES');
     }
 
     const locationData = await res.json();
-    console.log(locationData.features[0].properties);
     const locationDataObj = {
       state_code: locationData.features[0].properties.state_code,
       country_code: locationData.features[0].properties.country_code.toUpperCase(),
@@ -111,7 +108,6 @@ function Weather() {
 
       setCitiesWeather((prev) => {
         // check that that care is not already being displayed
-        console.log(`obj: ${newObj}`);
         const locationAlreadyExists = prev.some(
           (curr) => curr.location.toLowerCase() === newObj.location.toLowerCase(),
         );

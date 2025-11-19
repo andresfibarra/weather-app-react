@@ -41,7 +41,7 @@ function WeatherCardModal({ weather, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800">
 
-          <h3 id="weather-detail-title" className="text-lg font-semibold">
+          <h3 id="weather-detail-title" className="text-2xl font-semibold">
             {weather.location}
           </h3>
           <button

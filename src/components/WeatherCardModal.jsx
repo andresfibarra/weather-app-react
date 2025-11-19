@@ -18,8 +18,8 @@ function WeatherCardModal({ weather, onClose }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  const sunrise = convertToTime(weather.current.sunrise);
-  const sunset = convertToTime(weather.current.sunset);
+  const sunrise = convertToTime(weather.current.sunrise, weather.time_zone_abbreviation, true);
+  const sunset = convertToTime(weather.current.sunset, weather.time_zone_abbreviation, true);
 
   return createPortal(
     <div

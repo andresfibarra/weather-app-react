@@ -1,6 +1,9 @@
-export default function convertToTime(dt) {
-  return new Date(dt * 1000).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+export default function convertToTime(dt, timeZone, showTimeZoneName = true) {
+  const options = {
+    timeZone, timeZoneName: 'short', hour: '2-digit', minute: '2-digit',
+  };
+
+  if (!showTimeZoneName) delete options.timeZoneName;
+
+  return new Date(dt * 1000).toLocaleTimeString([], options);
 }

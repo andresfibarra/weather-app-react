@@ -47,6 +47,7 @@ function Weather() {
     return coordsArray;
   }
 
+  // Retrieve state code, country code, and time zone abbreviation
   async function getLocationCodes(coordsArray) {
     // assume coordsArray = [lat, long]
     const [lat, lon] = coordsArray;
@@ -63,6 +64,7 @@ function Weather() {
     const locationDataObj = {
       state_code: locationData.features[0].properties.state_code,
       country_code: locationData.features[0].properties.country_code.toUpperCase(),
+      time_zone_abbreviation: locationData.features[0].properties.timezone.abbreviation_STD,
     };
     // return object with the state and country codes
     return locationDataObj;
@@ -98,12 +100,19 @@ function Weather() {
       }
 
       const data = await res.json();
+      if (debug) console.log(data);
 
       // add state or country field
       const locationCodes = await getLocationCodes(coordsArray.slice(0, 2)); // [0] is lat, [1] is long
 
+      // compile data into new weather object
       const newObj = {
-        ...data, state_code: locationCodes.state_code, country_code: locationCodes.country_code, location: coordsArray[2], id: crypto.randomUUID(),
+        ...data,
+        state_code: locationCodes.state_code,
+        country_code: locationCodes.country_code,
+        time_zone_abbreviation: locationCodes.time_zone_abbreviation,
+        location: coordsArray[2],
+        id: crypto.randomUUID(),
       };
 
       setCitiesWeather((prev) => {
@@ -156,7 +165,6 @@ function Weather() {
     if (debug) console.log(`Open card! ID: ${id}`);
 
     // set weather
-
     setSelectedId(id);
   }, []);
 

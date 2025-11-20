@@ -1,11 +1,15 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import WeatherCardsList from '../components/WeatherCardsList';
 import WeatherCardModal from '../components/WeatherCardModal';
+import useStore from '../store/index';
 
 const debug = true;
 
 function Weather() {
-  const [citiesWeather, setCitiesWeather] = useState([]); // array of weathers to display cards
+  const citiesWeather = useStore((state) => state.citiesWeather);
+  const setCitiesWeather = useStore((state) => state.setCitiesWeather);
+  const addCityWeather = useStore((state) => state.addCityWeather);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [query, setQuery] = useState(''); // search field
@@ -70,6 +74,16 @@ function Weather() {
     return locationDataObj;
   }
 
+  function handleAddCity(newObj) {
+    const added = addCityWeather(newObj);
+
+    if (!added) {
+      if (debug) console.log(`Skipping duplicate: ${newObj.location}`);
+      setError(`Weather for ${newObj.location} already being shown`);
+      throw new Error('ERROR ADDING CITY');
+    }
+  }
+
   async function getWeather(input) {
     if (!input) return;
 
@@ -115,27 +129,23 @@ function Weather() {
         id: crypto.randomUUID(),
       };
 
-      setCitiesWeather((prev) => {
-        // check that that care is not already being displayed
-        const locationAlreadyExists = prev.some(
-          (curr) => curr.location.toLowerCase() === newObj.location.toLowerCase(),
-        );
-        const stateAlreadyExists = prev.some(
-          (curr) => curr.state_code === newObj.state_code,
-        );
-        const countryAlreadyExists = prev.some(
-          (curr) => curr.country_code === newObj.country_code,
-        );
-        if (locationAlreadyExists && stateAlreadyExists && countryAlreadyExists) {
-          if (debug) console.log(`Skipping duplicate: ${newObj.location}`);
-          setError(`Weather for ${newObj.location} already being shown`);
-          return prev;
-        }
-        return [ // else add to the list of cities
-          newObj,
-          ...prev,
-        ];
-      });
+      handleAddCity(newObj);
+
+      // setCitiesWeather((prev) => {
+      //   // check that that care is not already being displayed
+      //   const isDuplicate = prev.some((curr) => curr.location.toLowerCase() === newObj.location.toLowerCase()
+      //     && curr.state_code === newObj.state_code
+      //     && curr.country_code === newObj.country_code);
+      //   if (isDuplicate) {
+      //     if (debug) console.log(`Skipping duplicate: ${newObj.location}`);
+      //     setError(`Weather for ${newObj.location} already being shown`);
+      //     return prev;
+      //   }
+      //   return [ // else add to the list of cities
+      //     newObj,
+      //     ...prev,
+      //   ];
+      // });
       setQuery('');
 
       if (debug) console.log(newObj);
@@ -169,10 +179,13 @@ function Weather() {
   }, []);
 
   // turn selectedID into a weather object
-  const selectedWeather = useMemo(
-    () => citiesWeather.find((w) => w.id === selectedId) || null,
-    [citiesWeather, selectedId],
-  );
+  if (debug) console.log(`citiesWeather: ${citiesWeather}`);
+  const selectedWeather = useStore.getState().getCityWeatherById(selectedId);
+  if (debug) console.log(`SelectedWeather: ${selectedWeather}`);
+  // const selectedWeather = useMemo(
+  //   () => citiesWeather.find((w) => w.id === selectedId) || null,
+  //   [citiesWeather, selectedId],
+  // );
 
   // eslint-disable-next-line no-unused-vars
   const handleCloseCardDetails = useCallback(() => {
@@ -213,7 +226,7 @@ function Weather() {
       )}
 
       {citiesWeather && (
-        <WeatherCardsList citiesWeather={citiesWeather} onRemove={handleRemoveCard} onExpand={handleOpenCardDetails} />
+        <WeatherCardsList onRemove={handleRemoveCard} onExpand={handleOpenCardDetails} />
       )}
     </div>
   );

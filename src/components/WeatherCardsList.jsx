@@ -1,7 +1,10 @@
 import React from 'react';
 import WeatherCard from './WeatherCard';
+import useStore from '../store/index';
 
-function WeatherCardsList({ citiesWeather, onRemove, onExpand }) {
+function WeatherCardsList({ onRemove, onExpand }) {
+  const citiesWeather = useStore((state) => state.citiesWeather);
+
   if (!citiesWeather || citiesWeather.length === 0) {
     return <div className="hint">Search for a city or zip code to get started!</div>;
   }

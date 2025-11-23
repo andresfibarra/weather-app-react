@@ -2,19 +2,39 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
+// -----------------------------
+// Global weather store (Zustand)
+// -----------------------------
+// Persisted in localStorage + Immer for easy mutation-style updates.
+// Devtools enabled for easier debugging.
+//
+// Structure: {
+//   citiesWeather: [ { id, location, ... }, ... ],
+//   actions: { setCitiesWeather, addCityWeather, deleteCityById, getCityWeatherById }
+// }
+// -----------------------------
+
 const useStore = create(persist(
   devtools(immer((set, get) => {
     return {
+      // -----------------------------
+      // STATE
+      // -----------------------------
       citiesWeather: [],
 
-      // replace whole array
+      // -----------------------------
+      // Replace entire citiesWeather array
+      // -----------------------------
       setCitiesWeather: (newCitiesWeather) => set(
         (draftState) => { draftState.citiesWeather = newCitiesWeather; },
         false,
         'weather/setCitiesWeather',
       ),
 
-      // add city if not duplicate
+      // -----------------------------
+      // Add a city card (skip if duplicate)
+      // Returns true if added, false if not.
+      // -----------------------------
       addCityWeather: (newObj) => {
         const { citiesWeather } = get();
 
@@ -39,7 +59,9 @@ const useStore = create(persist(
         return true; // indicate ADDED
       },
 
-      // delete city by ID
+      // -----------------------------
+      // Delete city card by ID
+      // -----------------------------
       deleteCityById: (id) => {
         // use Immer to mutate
         set(
@@ -49,7 +71,10 @@ const useStore = create(persist(
         );
       },
 
-      // getter
+      // -----------------------------
+      // Getter: find card by ID
+      // Returns the card or null if not found.
+      // -----------------------------
       getCityWeatherById: (id) => {
         const cities = get().citiesWeather;
         const list = Array.isArray(cities) ? cities : [];

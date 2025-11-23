@@ -7,7 +7,6 @@ const debug = false;
 
 function Weather() {
   const citiesWeather = useStore((state) => state.citiesWeather);
-  // const setCitiesWeather = useStore((state) => state.setCitiesWeather);
   const addCityWeather = useStore((state) => state.addCityWeather);
   const deleteCityById = useStore((state) => state.deleteCityById);
 

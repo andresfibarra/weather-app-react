@@ -39,6 +39,16 @@ const useStore = create(persist(
         return true; // indicate ADDED
       },
 
+      // delete city by ID
+      deleteCityById: (id) => {
+        // use Immer to mutate
+        set(
+          (draftState) => {
+            draftState.citiesWeather = draftState.citiesWeather.filter((card) => card.id !== id);
+          },
+        );
+      },
+
       // getter
       getCityWeatherById: (id) => {
         const cities = get().citiesWeather;

@@ -23,7 +23,10 @@ function WeatherCard({ weather, onRemove, onExpand }) {
       <button
         type="button"
         className="absolute top-1.5 right-1.5 bg-transparent border-0 text-gray-400 hover:text-red-400 transition-colors duration-200 cursor-pointer rounded-2xl "
-        onClick={() => onRemove(weather.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onRemove(weather.id);
+        }}
         aria-label="Remove weather card"
       >
         <FaRegWindowClose size={18} />

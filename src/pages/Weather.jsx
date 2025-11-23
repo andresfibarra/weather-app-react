@@ -3,12 +3,13 @@ import WeatherCardsList from '../components/WeatherCardsList';
 import WeatherCardModal from '../components/WeatherCardModal';
 import useStore from '../store/index';
 
-const debug = true;
+const debug = false;
 
 function Weather() {
   const citiesWeather = useStore((state) => state.citiesWeather);
-  const setCitiesWeather = useStore((state) => state.setCitiesWeather);
+  // const setCitiesWeather = useStore((state) => state.setCitiesWeather);
   const addCityWeather = useStore((state) => state.addCityWeather);
+  const deleteCityById = useStore((state) => state.deleteCityById);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -131,21 +132,6 @@ function Weather() {
 
       handleAddCity(newObj);
 
-      // setCitiesWeather((prev) => {
-      //   // check that that care is not already being displayed
-      //   const isDuplicate = prev.some((curr) => curr.location.toLowerCase() === newObj.location.toLowerCase()
-      //     && curr.state_code === newObj.state_code
-      //     && curr.country_code === newObj.country_code);
-      //   if (isDuplicate) {
-      //     if (debug) console.log(`Skipping duplicate: ${newObj.location}`);
-      //     setError(`Weather for ${newObj.location} already being shown`);
-      //     return prev;
-      //   }
-      //   return [ // else add to the list of cities
-      //     newObj,
-      //     ...prev,
-      //   ];
-      // });
       setQuery('');
 
       if (debug) console.log(newObj);
@@ -165,12 +151,11 @@ function Weather() {
 
   // function to remove a weather card; passed down as a prop
   const handleRemoveCard = useCallback((id) => {
-    setCitiesWeather((prev) => prev.filter((card) => card.id !== id));
+    if (debug) console.log(`Removing card with ID ${id}`);
+    deleteCityById(id);
   }, []);
 
   // function to open a weather card modal; passed down as a prop
-  // bubble up ID?
-
   const handleOpenCardDetails = useCallback((id = null) => {
     if (debug) console.log(`Open card! ID: ${id}`);
 
@@ -182,12 +167,7 @@ function Weather() {
   if (debug) console.log(`citiesWeather: ${citiesWeather}`);
   const selectedWeather = useStore.getState().getCityWeatherById(selectedId);
   if (debug) console.log(`SelectedWeather: ${selectedWeather}`);
-  // const selectedWeather = useMemo(
-  //   () => citiesWeather.find((w) => w.id === selectedId) || null,
-  //   [citiesWeather, selectedId],
-  // );
 
-  // eslint-disable-next-line no-unused-vars
   const handleCloseCardDetails = useCallback(() => {
     if (debug) console.log('close!');
     setSelectedId(null);
